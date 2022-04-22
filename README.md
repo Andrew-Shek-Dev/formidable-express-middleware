@@ -16,11 +16,6 @@ interface IFormMiddleWareFields{
 }
 ```
 
-Create New Express.js Request Type (support this formidable middleware)
-```typescript
-type FormMiddleWareRequest = IFormMiddleWareRequestTemplate<IFormMiddleWareFields>;
-```
-
 Create the Middleware Instance
 ```typescript
 const uploadDir = 'uploads';
@@ -41,11 +36,10 @@ formidableMiddleware<IFormMiddleWareFields>(
     ["content"] /*Form Data Names which are added in filename*/),
 
     async (req: Request, res: Response) => {
-        const newReq = req as FormMiddleWareRequest; //<--MUST add this code before use it
         const memos = [];
         memos.push({
-            content: newReq.fields.content,
-            image: newReq.file.newFilename
+            content: req.fields.content,
+            image: req.file.newFilename
         });
         res.json(memos);
     }
