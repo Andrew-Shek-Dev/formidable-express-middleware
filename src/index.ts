@@ -2,9 +2,6 @@ import { NextFunction, Request, Response } from 'express';
 import formidable from 'formidable';
 import { mkdirSync } from 'fs';
 
-// const uploadDir = 'uploads';
-// mkdirSync(uploadDir, { recursive: true });
-
 export interface IFormMiddleWareFile {
   filepath: string;
   newFilename: string;

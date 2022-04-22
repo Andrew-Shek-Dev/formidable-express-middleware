@@ -6,7 +6,7 @@ Let [formidable](https://github.com/node-formidable/formidable) has ability of i
 ## How to use?
 import the library
 ```typescript
-import { formMiddleWare, IFormMiddleWareRequestTemplate } from 'formidable-express-middleware';
+import FormidableMiddleware,{IFormMiddleWareRequestTemplate} from 'formidable-express-middleware';
 ```
 
 Create the HTML Form Data Data Type:
@@ -21,10 +21,22 @@ Create New Express.js Request Type (support this formidable middleware)
 type FormMiddleWareRequest = IFormMiddleWareRequestTemplate<IFormMiddleWareFields>;
 ```
 
+Create the Middleware Instance
+```typescript
+const uploadDir = 'uploads';
+const formidableMiddleware = FormidableMiddleware({
+      /*formidable options*/
+      uploadDir,
+      keepExtensions: true,
+      maxFileSize: 200 * 1024 ** 2,
+      filter: (part) => part.mimetype?.startsWith('image/') || false,
+})
+```
+
 Create a Express.js Web Service which use formidable, and insert the middleware in the function.
 ```typescript
 app.post("/memo", 
-formMiddleWare<IFormMiddleWareFields>(
+formidableMiddleware<IFormMiddleWareFields>(
     "image" /*file upload HTML element name*/, 
     ["content"] /*Form Data Names which are added in filename*/),
 
