@@ -6,7 +6,6 @@ const app = express();
 interface FormData{
     content:string;
 }
-type FormMiddleWareRequest = IFormMiddleWareRequestTemplate<FormData>;
 
 const uploadDir = 'uploads';
 const formidableMiddleware = FormidableMiddleware({
@@ -17,10 +16,9 @@ const formidableMiddleware = FormidableMiddleware({
 })
 
 app.post("/test",formidableMiddleware<FormData>("image",["content"]),(req:Request,res:Response)=>{
-    const newReq = req as FormMiddleWareRequest;
     res.json({
-        fields:newReq.fields,
-        file:newReq.file
+        fields:req.body.fields,
+        file:req.body.file
     });
 });
 

@@ -62,8 +62,10 @@ const FormidableMiddleware = (options:formidable.Options)=>{
         next(err);
         return;
       }
-      (req as IFormMiddleWareRequestTemplate<T>).fields = body;
-      (req as IFormMiddleWareRequestTemplate<T>).file = file;
+      req.body = {
+        fields:body,
+        file:file
+      }
       next();
     });
   };
