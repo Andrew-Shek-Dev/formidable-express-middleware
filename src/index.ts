@@ -2,8 +2,8 @@ import { NextFunction, Request, Response } from 'express';
 import formidable from 'formidable';
 import { mkdirSync } from 'fs';
 
-const uploadDir = 'uploads';
-mkdirSync(uploadDir, { recursive: true });
+// const uploadDir = 'uploads';
+// mkdirSync(uploadDir, { recursive: true });
 
 export interface IFormMiddleWareFile {
   filepath: string;
@@ -17,16 +17,18 @@ export interface IFormMiddleWareRequestTemplate<T> extends Request {
   file: IFormMiddleWareFile;
 }
 
-export const formMiddleWare =
-  <T>(_fieldName: string, targetFields: string[]) =>
+const FormidableMiddleware = (options:formidable.Options)=>{
+  if (options.uploadDir){
+    mkdirSync(options.uploadDir,{ recursive: true });
+  }else{
+    throw Error("uploadDir field must be provided!");
+  }
+  return <T>(_fieldName: string, targetFields: string[]) =>
   (req: Request, res: Response, next: NextFunction) => {
     let body: T;
     let file: IFormMiddleWareFile;
     const form = formidable({
-      uploadDir,
-      keepExtensions: true,
-      maxFileSize: 200 * 1024 ** 2,
-      filter: (part) => part.mimetype?.startsWith('image/') || false,
+      ...options,
       filename: (orgFileName, orgExtName, part, _) => {
         const timestamp = Date.now();
         const ext = part.mimetype?.split('/').pop();
@@ -68,3 +70,5 @@ export const formMiddleWare =
       next();
     });
   };
+};
+export default FormidableMiddleware;

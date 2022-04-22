@@ -39,3 +39,19 @@ formMiddleWare<IFormMiddleWareFields>(
     }
 });
 ```
+
+## How to test?
+Please run following command under terminal under "test" folder
+```
+npx ts-node server.ts
+```
+
+Please run Insomnia/Postman testing following service:
+```
+http://localhost:8080/test
+
+Method: POST
+Required Fields:
+content (plain text)
+image (image file)
+```

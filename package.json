@@ -1,6 +1,6 @@
 {
   "name": "formidable-express-middleware",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "File Name can be customized by HTML Form Data in Middleware Way under Express.js",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -19,7 +19,11 @@
     "type": "git",
     "url": "git+https://github.com/Andrew-Shek-Dev/formidable-express-middleware.git"
   },
-  "keywords": ["formidable","express.js","newFilename"],
+  "keywords": [
+    "formidable",
+    "express.js",
+    "newFilename"
+  ],
   "author": "Small IT Potatoes",
   "license": "ISC",
   "bugs": {
